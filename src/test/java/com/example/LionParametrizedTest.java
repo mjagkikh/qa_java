@@ -14,15 +14,13 @@ import static com.example.constant.Constants.PREDATOR_FOODS;
 
 @RunWith(Parameterized.class)
 public class LionParametrizedTest {
-    private final String sex;
-    private final int kittensCount;
+    private final int expectedKittens;
     private final boolean hasMane;
     private Feline feline;
     private Lion lion;
 
-    public LionParametrizedTest(String sex, int kittensCount, boolean hasMane) throws Exception {
-        this.sex = sex;
-        this.kittensCount = kittensCount;
+    public LionParametrizedTest(String sex, int expectedKittens, boolean hasMane) throws Exception {
+        this.expectedKittens = expectedKittens;
         this.hasMane = hasMane;
         this.feline = Mockito.spy(new Feline());
         this.lion = Mockito.spy(new Lion(feline, sex));
@@ -44,7 +42,7 @@ public class LionParametrizedTest {
     @Test
     public void shouldReturnOneKittens() {
         int actual = lion.getKittens();
-        Assertions.assertEquals(1, actual);
+        Assertions.assertEquals(expectedKittens, actual);
     }
 
     @Test

@@ -1,10 +1,8 @@
 package com.example;
 
 import com.example.constant.AnimalType;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
@@ -18,10 +16,6 @@ import static com.example.constant.Constants.*;
 public class AnimalTest {
     @Spy
     private Animal spyAnimal;
-    private String expectMessage = "Неизвестный вид животного, используйте значение Травоядное или Хищник";
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void shouldExecuteMethodAnimalGetFood() throws Exception {
@@ -42,10 +36,10 @@ public class AnimalTest {
     }
 
     @Test
-    public void shouldReturnException() throws Exception {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage(expectMessage);
-        spyAnimal.getFood(AnimalType.UNKNOW.getType());
+    public void shouldReturnException() {
+        Exception exception = Assertions.assertThrows(Exception.class, () ->
+                spyAnimal.getFood(AnimalType.UNKNOW.getType()));
+        Assertions.assertTrue(exception.getMessage().contains("Неизвестный вид животного, используйте значение Травоядное или Хищник"));
     }
 
     @Test
